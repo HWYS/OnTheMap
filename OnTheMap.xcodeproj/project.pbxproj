@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		FDCB8DDD26F893A0004EB745 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB8DDC26F893A0004EB745 /* AppDelegate.swift */; };
 		FDCB8DDF26F893A0004EB745 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB8DDE26F893A0004EB745 /* SceneDelegate.swift */; };
-		FDCB8DE126F893A0004EB745 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB8DE026F893A0004EB745 /* ViewController.swift */; };
+		FDCB8DE126F893A0004EB745 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB8DE026F893A0004EB745 /* LoginViewController.swift */; };
 		FDCB8DE426F893A0004EB745 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDCB8DE226F893A0004EB745 /* Main.storyboard */; };
 		FDCB8DE626F893AF004EB745 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FDCB8DE526F893AF004EB745 /* Assets.xcassets */; };
 		FDCB8DE926F893AF004EB745 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDCB8DE726F893AF004EB745 /* LaunchScreen.storyboard */; };
@@ -19,7 +19,7 @@
 		FDCB8DD926F893A0004EB745 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDCB8DDC26F893A0004EB745 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FDCB8DDE26F893A0004EB745 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		FDCB8DE026F893A0004EB745 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FDCB8DE026F893A0004EB745 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		FDCB8DE326F893A0004EB745 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FDCB8DE526F893AF004EB745 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FDCB8DE826F893AF004EB745 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -56,15 +56,39 @@
 		FDCB8DDB26F893A0004EB745 /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
+				FDCB8DF226F8ACC4004EB745 /* Model */,
+				FDCB8DF126F8ACBC004EB745 /* View */,
+				FDCB8DF026F8ACA9004EB745 /* Controller */,
 				FDCB8DDC26F893A0004EB745 /* AppDelegate.swift */,
 				FDCB8DDE26F893A0004EB745 /* SceneDelegate.swift */,
-				FDCB8DE026F893A0004EB745 /* ViewController.swift */,
+				FDCB8DE026F893A0004EB745 /* LoginViewController.swift */,
 				FDCB8DE226F893A0004EB745 /* Main.storyboard */,
 				FDCB8DE526F893AF004EB745 /* Assets.xcassets */,
 				FDCB8DE726F893AF004EB745 /* LaunchScreen.storyboard */,
 				FDCB8DEA26F893AF004EB745 /* Info.plist */,
 			);
 			path = OnTheMap;
+			sourceTree = "<group>";
+		};
+		FDCB8DF026F8ACA9004EB745 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		FDCB8DF126F8ACBC004EB745 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FDCB8DF226F8ACC4004EB745 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,7 +161,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FDCB8DE126F893A0004EB745 /* ViewController.swift in Sources */,
+				FDCB8DE126F893A0004EB745 /* LoginViewController.swift in Sources */,
 				FDCB8DDD26F893A0004EB745 /* AppDelegate.swift in Sources */,
 				FDCB8DDF26F893A0004EB745 /* SceneDelegate.swift in Sources */,
 			);
@@ -287,6 +311,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZFTPS95599;
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -305,6 +330,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZFTPS95599;
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
