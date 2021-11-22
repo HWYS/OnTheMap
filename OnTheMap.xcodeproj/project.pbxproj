@@ -7,15 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FDCA4092274B96E000951E3A /* UdacityApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCA4091274B96E000951E3A /* UdacityApiClient.swift */; };
 		FDCB8DDD26F893A0004EB745 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB8DDC26F893A0004EB745 /* AppDelegate.swift */; };
 		FDCB8DDF26F893A0004EB745 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB8DDE26F893A0004EB745 /* SceneDelegate.swift */; };
 		FDCB8DE126F893A0004EB745 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB8DE026F893A0004EB745 /* LoginViewController.swift */; };
 		FDCB8DE426F893A0004EB745 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDCB8DE226F893A0004EB745 /* Main.storyboard */; };
 		FDCB8DE626F893AF004EB745 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FDCB8DE526F893AF004EB745 /* Assets.xcassets */; };
 		FDCB8DE926F893AF004EB745 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDCB8DE726F893AF004EB745 /* LaunchScreen.storyboard */; };
+		FDF2C7BF274C070400960818 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2C7BE274C070400960818 /* LoginResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FDCA4091274B96E000951E3A /* UdacityApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityApiClient.swift; sourceTree = "<group>"; };
 		FDCB8DD926F893A0004EB745 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDCB8DDC26F893A0004EB745 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FDCB8DDE26F893A0004EB745 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +27,7 @@
 		FDCB8DE526F893AF004EB745 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FDCB8DE826F893AF004EB745 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FDCB8DEA26F893AF004EB745 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FDF2C7BE274C070400960818 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +65,6 @@
 				FDCB8DF026F8ACA9004EB745 /* Controller */,
 				FDCB8DDC26F893A0004EB745 /* AppDelegate.swift */,
 				FDCB8DDE26F893A0004EB745 /* SceneDelegate.swift */,
-				FDCB8DE026F893A0004EB745 /* LoginViewController.swift */,
 				FDCB8DE226F893A0004EB745 /* Main.storyboard */,
 				FDCB8DE526F893AF004EB745 /* Assets.xcassets */,
 				FDCB8DE726F893AF004EB745 /* LaunchScreen.storyboard */,
@@ -73,6 +76,7 @@
 		FDCB8DF026F8ACA9004EB745 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				FDCB8DE026F893A0004EB745 /* LoginViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -87,8 +91,18 @@
 		FDCB8DF226F8ACC4004EB745 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FDF2C7BD274C06EC00960818 /* Response */,
+				FDCA4091274B96E000951E3A /* UdacityApiClient.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		FDF2C7BD274C06EC00960818 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				FDF2C7BE274C070400960818 /* LoginResponse.swift */,
+			);
+			path = Response;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,6 +178,8 @@
 				FDCB8DE126F893A0004EB745 /* LoginViewController.swift in Sources */,
 				FDCB8DDD26F893A0004EB745 /* AppDelegate.swift in Sources */,
 				FDCB8DDF26F893A0004EB745 /* SceneDelegate.swift in Sources */,
+				FDCA4092274B96E000951E3A /* UdacityApiClient.swift in Sources */,
+				FDF2C7BF274C070400960818 /* LoginResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
