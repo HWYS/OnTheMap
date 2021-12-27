@@ -52,38 +52,33 @@ class UdacityApiClient{
     
     class func login(with  email: String, password: String,  completion: @escaping (Bool, Error?) ->()){
         
-        var request = URLRequest(url: EndPoints.createSessionId.urlRoute)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}".data(using: .utf8)
-        let session = URLSession.shared
-        let task = session.dataTask(with: request) { data, response, error in
-            guard let data = data else {
-                DispatchQueue.main.async {
-                    return completion(false,  error)
-                }
-                return
-            }
-            let range = 5..<data.count
-            let newData = data.subdata(in: range)
-            let decoder = JSONDecoder()
+        let body = "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}"
+        
+        NetworkRequestsHelper.taskForPosRetuest(url: EndPoints.createSessionId.urlRoute, apiType: "Udacity", responseType: LoginResponse.self, body: body, httpMethod: "POST") {
+            (response, error) in
             
-            do  {
-                let responseObject = try  decoder.decode(LoginResponse.self, from: newData)
+            if let response = response {
                 DispatchQueue.main.async {
-                    self.Auth.sessionId = responseObject.session.id
-                    self.Auth.accountKey = responseObject.account.key
+                    Auth.sessionId = response.session.id
+                    Auth.accountKey = response.account.key
                     completion(true, nil)
                 }
-            }
-            catch {
-                DispatchQueue.main.async {
-                    completion(false, error)
-                }
+                
+            } else {
+                completion(false, error)
             }
         }
-        task.resume()
         
+    }
+    
+    class func getStudentLocation(singleStudent: Bool, completion: @escaping([StudentLocation]?, Error?)  -> Void) {
+        NetworkRequestsHelper.taskForGetRequests(url: EndPoints.getStudentLocaction(0).urlRoute, apiType: "Parse", responseType: StudentLocation.self){(response,  error) in
+            
+            guard let response = response else{
+                completion([],  error)
+                return
+            }
+            //completion(response.results, nil)
+        }
     }
 }
