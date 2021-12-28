@@ -107,6 +107,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="pKp-Gl-vMf" id="nmB-Rm-3MI"/>
                         <outlet property="emailTextField" destination="tYx-ZW-eYZ" id="blD-LA-ucr"/>
+                        <outlet property="loginButton" destination="TyD-NE-rFa" id="cka-or-f6k"/>
                         <outlet property="passwordTextField" destination="FCy-Bl-39t" id="Tv9-g3-eYX"/>
                         <segue destination="1QW-tZ-oWM" kind="show" identifier="goToHome" id="d0p-K4-uMB"/>
                     </connections>
@@ -199,7 +200,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="OL1-nu-eXP" id="qDo-7D-h8j"/>
-                        <segue destination="uod-0Q-feu" kind="show" identifier="addLocation" id="2af-B0-Jz4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oW3-JL-HSm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -254,7 +254,6 @@
                     <connections>
                         <outlet property="activityIndicator" destination="W1c-qS-nD7" id="CoA-Yb-gQS"/>
                         <outlet property="mapView" destination="NxW-AD-lza" id="wNO-h6-BLF"/>
-                        <segue destination="uod-0Q-feu" kind="show" identifier="addLocation" id="dsT-wk-Em5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uYj-7h-LZw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -266,11 +265,11 @@
             <objects>
                 <viewController restorationIdentifier="AddLocationViewController" storyboardIdentifier="AddLocationViewController" id="uod-0Q-feu" customClass="AddLocationViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kRm-pe-FUw">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="laP-Z6-8v3">
-                                <rect key="frame" x="20" y="311" width="374" height="220"/>
+                                <rect key="frame" x="20" y="338" width="374" height="220"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="40N-jw-VFA">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="150"/>
@@ -296,7 +295,7 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where are you" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JKe-I4-GIg">
-                                <rect key="frame" x="111.5" y="56" width="191.5" height="37"/>
+                                <rect key="frame" x="111.5" y="44" width="191.5" height="37"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="JKe-I4-GIg" secondAttribute="height" multiplier="191:37" id="yGI-gX-b4H"/>
                                 </constraints>
@@ -305,13 +304,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Studying" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6n7-xl-Oxk">
-                                <rect key="frame" x="139" y="105" width="136.5" height="37"/>
+                                <rect key="frame" x="139" y="93" width="136.5" height="37"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="31"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="today?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KIr-6M-zpD">
-                                <rect key="frame" x="161.5" y="154" width="91" height="37"/>
+                                <rect key="frame" x="161.5" y="142" width="91" height="37"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="KIr-6M-zpD" secondAttribute="height" multiplier="91:37" id="iab-L8-TS0"/>
                                 </constraints>
@@ -337,6 +336,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="xFk-AZ-9Sm"/>
                     <connections>
+                        <outlet property="findLocationButton" destination="vpK-CQ-yff" id="zJb-yd-ugQ"/>
                         <outlet property="locationTextField" destination="40N-jw-VFA" id="S0V-qo-Lpi"/>
                         <segue destination="MSw-qm-X2y" kind="show" identifier="findLocation" id="3XG-7C-cjo"/>
                     </connections>
@@ -354,10 +354,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Jta-DR-mjs">
-                                <rect key="frame" x="0.0" y="216" width="414" height="597"/>
+                                <rect key="frame" x="0.0" y="160" width="414" height="648"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cZ7-yg-a1U">
-                                <rect key="frame" x="20" y="713" width="374" height="50"/>
+                                <rect key="frame" x="20" y="708" width="374" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="z4I-dT-6Eb"/>
                                 </constraints>
@@ -370,7 +370,7 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Website URL" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3ZS-mx-NeU">
-                                <rect key="frame" x="20" y="56" width="374" height="150"/>
+                                <rect key="frame" x="20" y="0.0" width="374" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="LMN-cH-ZzO"/>
                                 </constraints>
@@ -396,6 +396,7 @@
                     <navigationItem key="navigationItem" id="u3L-zm-fdR"/>
                     <connections>
                         <outlet property="mapView" destination="Jta-DR-mjs" id="ENS-SO-S4n"/>
+                        <outlet property="submitButton" destination="cZ7-yg-a1U" id="QcD-YH-exi"/>
                         <outlet property="websiteTextField" destination="3ZS-mx-NeU" id="bOK-mo-DiZ"/>
                     </connections>
                 </viewController>
@@ -461,9 +462,6 @@
             <point key="canvasLocation" x="1818.840579710145" y="684.375"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="dsT-wk-Em5"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="LaunchLogo" width="80" height="80"/>
         <image name="MapPin" width="36" height="36"/>

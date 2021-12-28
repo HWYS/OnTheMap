@@ -16,7 +16,7 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.mapView.delegate =  self
         getStudentLocations()
     }
@@ -25,7 +25,14 @@ class MapViewController: UIViewController {
         if !UdacityClient.Auth.objectId.isEmpty {
             showUpdateLocationAlert()
         }else{
-            self.performSegue(withIdentifier: "addLocation", sender: nil)
+            let viewController = self.storyboard?.instantiateViewController(withIdentifier: "AddLocationViewController") as! AddLocationViewController
+            viewController.isUpdateLocation = false
+            self.navigationController?.pushViewController(viewController, animated: true)
+        }
+        getStudentLocations()
+        
+        if UdacityClient.Auth.studentPostedCoordinate.longitude > 0.0 {
+            self.mapView.setCenter(UdacityClient.Auth.studentPostedCoordinate, animated: true)
         }
     }
     
@@ -41,41 +48,39 @@ class MapViewController: UIViewController {
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         UdacityClient.getStudentLocation { locations, error in
-            DispatchQueue.main.async {
-                self.showPinsOnMap(locations: locations)
-            }
-            
+            self.showPinsOnMap(locations: locations)
         }
     }
     
     func showPinsOnMap(locations: [StudentLocation]) {
-        DispatchQueue.main.async {
-            var annotations = [MKPointAnnotation]()
-            for dictionary in locations {
-                
-                let lat = CLLocationDegrees(dictionary.latitude)
-                let long = CLLocationDegrees(dictionary.longitude)
-                
-                
-                let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                
-                let first = dictionary.firstName
-                let last = dictionary.lastName
-                let mediaURL = dictionary.mediaURL
-                
-                
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = coordinate
-                annotation.title = "\(first) \(last)"
-                annotation.subtitle = mediaURL
-                
-                // Finally we place the annotation in an array of annotations.
-                annotations.append(annotation)
-            }
-            self.mapView.addAnnotations(annotations)
+        var annotations = [MKPointAnnotation]()
+        for dictionary in locations {
+            
+            let lat = CLLocationDegrees(dictionary.latitude)
+            let long = CLLocationDegrees(dictionary.longitude)
+            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+            
+            
+            let first = dictionary.firstName
+            let last = dictionary.lastName
+            let mediaURL = dictionary.mediaURL
+            
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            annotation.title = "\(first) \(last)"
+            annotation.subtitle = mediaURL
+            
+            // Finally we place the annotation in an array of annotations.
+            annotations.append(annotation)
+            
+            
         }
+        self.mapView.addAnnotations(annotations)
         activityIndicator.stopAnimating()
         activityIndicator.isHidden = true
+        
+        
     }
     /*
     // MARK: - Navigation

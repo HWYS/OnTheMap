@@ -13,28 +13,33 @@ class LoginViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var passwordTextField: UITextField!
     
     var isEmailTextFieldEmpty = true
+    @IBOutlet weak var loginButton: UIButton!
     var isPasswordFieldEmpty = true
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        activityIndicator.isHidden = true
+        loginButton.isEnabled =  false
         emailTextField.delegate = self
         passwordTextField.delegate = self
+        
+        isLoggingIn(false)
     }
     
     func isLoggingIn(_ loggingIn: Bool) {
-        activityIndicator.isHidden = false
-        if loggingIn {
-            activityIndicator.startAnimating()
-        } else {
-            activityIndicator.stopAnimating()
+        DispatchQueue.main.async {
+            if loggingIn {
+                self.activityIndicator.isHidden = false
+                self.activityIndicator.startAnimating()
+            } else {
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+            }
         }
-        activityIndicator.isHidden = true
     }
     
     @IBAction func loginClick(_ sender: Any) {
+        isLoggingIn(true)
         UdacityClient.login(email: emailTextField.text!, password: passwordTextField.text!, completion: handleLoginResponse(success:error:))
     }
     
@@ -43,27 +48,18 @@ class LoginViewController: UIViewController, UITextViewDelegate {
     }
     
     func handleLoginResponse(success: Bool, error: Error?){
-        isLoggingIn(true)
+        
         if success {
-            DispatchQueue.main.async {
-                self.performSegue(withIdentifier: "goToHome", sender: nil)
-            }
             
-            //isLoggingIn(false)
+            self.performSegue(withIdentifier: "goToHome", sender: nil)
         }
         else {
-      
-           showLoginFailure(message: error?.localizedDescription ?? "Wrong Email or Password!!")
-           //isLoggingIn(false)
+            showAlert(message: error?.localizedDescription ?? "Wrong Email or Password", title: "Login")
+           
         }
         isLoggingIn(false)
       }
     
-    func showLoginFailure(message: String) {
-        let alertVC = UIAlertController(title: "Login Failed", message: message, preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        show(alertVC, sender: nil)
-    }
     
 }
 
@@ -92,15 +88,17 @@ extension LoginViewController: UITextFieldDelegate {
             
             if updatedText.isEmpty && updatedText == "" {
                 isPasswordFieldEmpty = true
+                loginButton.isEnabled  = false
             } else {
                 isPasswordFieldEmpty = false
+                loginButton.isEnabled  = true
             }
         }
         
         if isEmailTextFieldEmpty == false && isPasswordFieldEmpty == false {
-            //buttonEnabled(true, button: loginButton)
+            loginButton.isEnabled = false
         } else {
-            //buttonEnabled(false, button: loginButton)
+            loginButton.isEnabled = true
         }
         
         return true
@@ -108,18 +106,13 @@ extension LoginViewController: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        /*if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
-            nextField.becomeFirstResponder()
-        } else {
-            textField.resignFirstResponder()
-            //login(loginButton)
-        }*/
+        
         textField.resignFirstResponder()
         return true
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        //buttonEnabled(false, button: loginButton)
+        //loginButton.isEnabled = false
         if textField == emailTextField {
             isEmailTextFieldEmpty = true
         }

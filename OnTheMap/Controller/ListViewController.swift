@@ -33,8 +33,11 @@ class ListViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         if !UdacityClient.Auth.objectId.isEmpty {
             showUpdateLocationAlert()
         }else{
-            self.performSegue(withIdentifier: "addLocation", sender: nil)
+            let viewController = self.storyboard?.instantiateViewController(withIdentifier: "AddLocationViewController") as! AddLocationViewController
+            viewController.isUpdateLocation = false
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
+        getStudentLocations()
     }
     
     @IBAction func refreshClick(_ sender: Any) {

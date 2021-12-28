@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MapKit
 
 class  UdacityClient {
     
@@ -13,6 +14,7 @@ class  UdacityClient {
         static var accountKey = ""
         static var sessionId = ""
         static var objectId = ""
+        static var studentPostedCoordinate = CLLocationCoordinate2D()
     }
     
     enum Endpoints {
@@ -49,13 +51,17 @@ class  UdacityClient {
     
     class func login(email: String, password: String, completion: @escaping(Bool, Error?) -> Void) {
         
-        var request = URLRequest(url: Endpoints.login.url)
+        /*(var request = URLRequest(url: Endpoints.login.url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
         request.httpBody = "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}".data(using: .utf8)
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data else {
-                completion(false, error)
+                DispatchQueue.main.async {
+                    completion(false, error)
+                }
+                
                 return
             }
             
@@ -66,12 +72,30 @@ class  UdacityClient {
                 let responseObject = try  JSONDecoder().decode(LoginResponse.self, from: newData)
                 Auth.accountKey = responseObject.account.key
                 Auth.sessionId = responseObject.session.id
-                completion(true, nil)
+                DispatchQueue.main.async {
+                    completion(true, nil)
+                }
+                
             }catch {
+                DispatchQueue.main.async {
+                    completion(false, error)
+                }
+                
+            }
+        }
+        task.resume()*/
+        
+        let body = LogInRequestBody(udacity: Udacity(username: email, password: password))
+        taskForPosRetuest(url: Endpoints.login.url, requestMethod: .post, isUdacityApi: true, responseType: LoginResponse.self, requestBody: body) { response, error in
+            if let response = response {
+                Auth.accountKey = response.account.key
+                Auth.sessionId = response.session.id
+                print(Auth.accountKey)
+                completion(true, nil)
+            }else{
                 completion(false, error)
             }
         }
-        task.resume()
     }
     
     class func logout(completion: @escaping(Bool, Error?) -> Void){
@@ -263,7 +287,10 @@ class  UdacityClient {
                     }
                 }
             } catch {
-                completion(nil, error)
+                DispatchQueue.main.async {
+                    completion(nil, error)
+                }
+                
             }
         }
         task.resume()

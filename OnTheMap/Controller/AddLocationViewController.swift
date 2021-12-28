@@ -13,13 +13,15 @@ class AddLocationViewController: UIViewController {
     @IBOutlet weak var locationTextField: UITextField!
     var isUpdateLocation = false
     
+    @IBOutlet weak var findLocationButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
     @IBAction func findLocationClick(_ sender: Any) {
+        findGeoLocationByName(locationName: locationTextField.text!)
     }
     
     private func findGeoLocationByName(locationName: String){
@@ -36,7 +38,7 @@ class AddLocationViewController: UIViewController {
                 }
                 
                 if let location = location {
-                    self.loadNewLocation(location.coordinate)
+                    self.goToFindLocation(location.coordinate)
                 } else {
                     self.showAlert(message: "Please try again later.", title: "Error")
                     //self.setLoading(false)
@@ -46,38 +48,17 @@ class AddLocationViewController: UIViewController {
         }
     }
     
-    private func loadNewLocation(_ coordinate: CLLocationCoordinate2D) {
+    private func goToFindLocation(_ coordinate: CLLocationCoordinate2D) {
         let viewController = storyboard?.instantiateViewController(withIdentifier: "FindLocationViewController") as! FindLocationViewController
         viewController.coordinate = coordinate
         viewController.isUpdateLocation = isUpdateLocation
         viewController.location =  locationTextField.text!
-        //controller.studentInformation = buildStudentInfo(coordinate)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     // MARK: Student info to display on Final Add Location screen
     
-    /*private func buildStudentInfo(_ coordinate: CLLocationCoordinate2D) -> PostLocationRequestBody {
-        
-        var studentInfo = [
-            "uniqueKey": UdacityClient.Auth.accountKey,
-            "firstName": "Johnathan",
-            "lastName": "Diaz",
-            "mapString": locationTextField.text!,
-            "mediaURL": websiteTextField.text!,
-            "latitude": coordinate.latitude,
-            "longitude": coordinate.longitude,
-            ] as [String: AnyObject]
-        
-        if let objectId = objectId {
-            studentInfo["objectId"] = objectId as AnyObject
-            print(objectId)
-        }
-
-        return PostLocationRequestBody(studentInfo)*/
-        
-        /*let postRequestBody =  PostLocationRequestBody(uniqueKey: UdacityClient.Auth.accountKey, firstName: "Johnathan", lastName: "Diaz", mapString: locationTextField.text, mediaURL: websiteTextField.text, latitude: coordinate.latitude, longitude: coordinate.longitude)
-    }*/
+   
     /*
     // MARK: - Navigation
 
@@ -88,4 +69,20 @@ class AddLocationViewController: UIViewController {
     }
     */
 
+}
+extension AddLocationViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField.state.isEmpty {
+            let currenText = locationTextField.text ?? ""
+            guard let stringRange = Range(range, in: currenText) else { return false }
+            let updatedText = currenText.replacingCharacters(in: stringRange, with: string)
+                                        
+            if updatedText.isEmpty && updatedText == "" {
+                findLocationButton.isEnabled = false
+            } else {
+                findLocationButton.isEnabled = true
+            }
+        }
+        return true
+    }
 }
