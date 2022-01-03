@@ -25,14 +25,16 @@ class MapViewController: UIViewController {
         if !UdacityClient.Auth.objectId.isEmpty {
             showUpdateLocationAlert()
         }else{
-            let viewController = self.storyboard?.instantiateViewController(withIdentifier: "AddLocationViewController") as! AddLocationViewController
+            /*let viewController = self.storyboard?.instantiateViewController(withIdentifier: "AddLocationViewController") as! AddLocationViewController
             viewController.isUpdateLocation = false
-            self.navigationController?.pushViewController(viewController, animated: true)
+            self.navigationController?.pushViewController(viewController, animated: true)*/
+            performSegue(withIdentifier: "addLocation", sender: nil)
         }
-        getStudentLocations()
+        
         
         if UdacityClient.Auth.studentPostedCoordinate.longitude > 0.0 {
             self.mapView.setCenter(UdacityClient.Auth.studentPostedCoordinate, animated: true)
+            
         }
     }
     
@@ -80,18 +82,28 @@ class MapViewController: UIViewController {
         activityIndicator.stopAnimating()
         activityIndicator.isHidden = true
         
-        
+        if UdacityClient.Auth.studentPostedCoordinate.longitude > 0 {
+            setStudentCurrentLocationPin(mapView: mapView, coordinate: UdacityClient.Auth.studentPostedCoordinate)
+        }
     }
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        let viewController = segue.destination as! AddLocationViewController
+        viewController.isUpdateLocation =  UdacityClient.Auth.objectId.count > 0
+        //viewController.modalPresentationStyle = .fullScreen
+        //present(viewController, animated: true, completion: nil)
     }
-    */
-
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getStudentLocations()
+    }
 }
 
 extension  MapViewController: MKMapViewDelegate {

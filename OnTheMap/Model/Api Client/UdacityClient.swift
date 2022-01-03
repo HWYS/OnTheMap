@@ -51,40 +51,6 @@ class  UdacityClient {
     
     class func login(email: String, password: String, completion: @escaping(Bool, Error?) -> Void) {
         
-        /*(var request = URLRequest(url: Endpoints.login.url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        request.httpBody = "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}".data(using: .utf8)
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data else {
-                DispatchQueue.main.async {
-                    completion(false, error)
-                }
-                
-                return
-            }
-            
-            let range = 5..<data.count
-            let newData = data.subdata(in: range) /* subset response data! */
-            print(String(data: newData, encoding: .utf8)!)
-            do {
-                let responseObject = try  JSONDecoder().decode(LoginResponse.self, from: newData)
-                Auth.accountKey = responseObject.account.key
-                Auth.sessionId = responseObject.session.id
-                DispatchQueue.main.async {
-                    completion(true, nil)
-                }
-                
-            }catch {
-                DispatchQueue.main.async {
-                    completion(false, error)
-                }
-                
-            }
-        }
-        task.resume()*/
-        
         let body = LogInRequestBody(udacity: Udacity(username: email, password: password))
         taskForPosRetuest(url: Endpoints.login.url, requestMethod: .post, isUdacityApi: true, responseType: LoginResponse.self, requestBody: body) { response, error in
             if let response = response {
@@ -128,25 +94,6 @@ class  UdacityClient {
     }
     
     class func postLocation(locationData: PostLocationRequestBody, completion: @escaping(Bool, Error?) -> Void) {
-        /*var request = URLRequest(url: Endpoints.postStudentLocation.url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        request.httpBody = try! JSONEncoder().encode(locationData)
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data else {
-                completion(false, error)
-                return
-            }
-            do{
-                let responseObject = try JSONDecoder().decode(PostLocationResponse.self, from: data)
-                print(responseObject.objectId)
-                completion(true, nil)
-            }catch{
-                completion(false, error)
-            }
-        }
-        task.resume()*/
         
         taskForPosRetuest(url: Endpoints.postStudentLocation.url, requestMethod: .post, isUdacityApi: false, responseType: PostLocationResponse.self, requestBody: locationData) { response, error in
             if let response = response {
@@ -159,29 +106,9 @@ class  UdacityClient {
     }
     
     class func updateLocation(objectId: String, locationData: PostLocationRequestBody, completion: @escaping (Bool, Error?) -> Void){
-        
-        /*var request = URLRequest(url: Endpoints.updateStudentLocation(objectId).url)
-        request.httpMethod = "PUT"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try! JSONEncoder().encode(locationData)
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data else {
-                completion(false, error)
-                return
-            }
-            do{
-                let responseObject = try JSONDecoder().decode(PostLocationResponse.self, from: data)
-                print(responseObject.objectId)
-                completion(true, nil)
-            }catch{
-                completion(false, error)
-            }
-        }
-        task.resume()*/
-        
-        taskForPosRetuest(url: Endpoints.updateStudentLocation(objectId).url, requestMethod: .put, isUdacityApi: false, responseType: PostLocationResponse.self, requestBody: locationData) { response, error in
-            if let response = response {
-                Auth.objectId = response.objectId
+      
+        taskForPosRetuest(url: Endpoints.updateStudentLocation(objectId).url, requestMethod: .put, isUdacityApi: false, responseType: UpdateLocationResponse.self, requestBody: locationData) { response, error in
+            if let _ = response {
                 completion(true,  nil)
             }else{
                 completion(false, error)
@@ -190,20 +117,7 @@ class  UdacityClient {
     }
     
     class func getStudentLocation(completion: @escaping ([StudentLocation], Error?) -> Void) {
-        /*let task = URLSession.shared.dataTask(with: Endpoints.getStudentLocations.url) { data, response, error in
-            guard let data = data else {
-                completion([], error)
-                return
-            }
-            
-            do{
-                let responseObject = try JSONDecoder().decode(StudentLocationResponse.self, from: data)
-                completion(responseObject.results, nil)
-            }catch{
-                completion([], error)
-            }
-        }
-        task.resume()*/
+        
         taskForGetRequests(url: Endpoints.getStudentLocations.url, isUdacityApi: false, responseType: StudentLocationResponse.self) { response, error in
             if let response = response {
                 completion(response.results, nil)
@@ -260,7 +174,7 @@ class  UdacityClient {
     class func taskForPosRetuest<RequestType:  Encodable,  ResponseType: Decodable> (url: URL, requestMethod: RequestMethod, isUdacityApi: Bool, responseType:  ResponseType.Type, requestBody: RequestType, completion: @escaping(ResponseType?, Error?) -> Void) {
         
         var request = URLRequest(url: url)
-        request.httpMethod = requestMethod.rawValue
+        request.httpMethod = requestMethod.rawValue.uppercased()
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         if isUdacityApi {
             request.addValue("application/json", forHTTPHeaderField: "Accept")

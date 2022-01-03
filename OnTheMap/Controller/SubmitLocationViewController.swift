@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-class FindLocationViewController: UIViewController {
+class SubmitLocationViewController: UIViewController {
     var location:  String = ""
     var mediaURL: String =  ""
     var  isUpdateLocation = false
@@ -23,49 +23,59 @@ class FindLocationViewController: UIViewController {
         submitButton.isEnabled = false
         websiteTextField.delegate = self
         // Do any additional setup after loading the view.
-        setLocationPin()
+        setStudentCurrentLocationPin(mapView: mapView, coordinate: coordinate)
     }
     
     @IBAction func finishClick(_ sender: Any) {
-        let body = PostLocationRequestBody(uniqueKey: UdacityClient.Auth.accountKey, firstName: "Johnathan", lastName: "Diaz", mapString: location, mediaURL: websiteTextField.text!, latitude: coordinate.latitude, longitude: coordinate.longitude)
-        if isUpdateLocation {
-            UdacityClient.updateLocation(objectId: UdacityClient.Auth.objectId, locationData: body, completion: handleLocationRequest(succes:error:))
-        } else{
-            UdacityClient.postLocation(locationData: body, completion: handleLocationRequest(succes:error:))
+        if let _ = URL(string: websiteTextField.text!) {
+            let body = PostLocationRequestBody(uniqueKey: UdacityClient.Auth.accountKey, firstName: "Johnathan", lastName: "Diaz", mapString: location, mediaURL: websiteTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines), latitude: coordinate.latitude, longitude: coordinate.longitude)
+            if isUpdateLocation {
+                UdacityClient.updateLocation(objectId: UdacityClient.Auth.objectId, locationData: body, completion: handleLocationRequest(succes:error:))
+            } else{
+                UdacityClient.postLocation(locationData: body, completion: handleLocationRequest(succes:error:))
+            }
+            
+        } else {
+            showAlert(message: "This is  not a valid URL", title: "Invalid URL")
         }
-        self.dismiss(animated: true, completion: nil)
     }
     
     func handleLocationRequest(succes: Bool, error: Error?) {
         if succes {
-            if isUpdateLocation {
-                showAlert(message: "Location updated successfully", title: "Location Update")
-            }else {
-                showAlert(message: "Location added successfully", title: "Location Add")
-            }
             
             UdacityClient.Auth.studentPostedCoordinate = coordinate
+            goBackToHome()
+            
         }else{
             if isUpdateLocation {
                 showAlert(message: "Something went wrong when updating location", title: "Location Update")
             }else {
                 showAlert(message: "Something went wrong when adding location", title: "Location Add")
             }
+            
         }
         
     }
+    @IBAction func cancelButtonClick(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
-    func setLocationPin() {
+    func goBackToHome () {
+       
+        presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    /*func setLocationPin() {
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         self.mapView.addAnnotation(annotation)
         self.mapView.setCenter(coordinate, animated: true)
-        /*let span = MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
-        let region =  MKCoordinateRegion(center: location, span: span)
-        self.mapView.setRegion(region, animated: true)*/
+        let span = MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
+        let region =  MKCoordinateRegion(center: coordinate, span: span)
+        self.mapView.setRegion(region, animated: true)
 
-    }
+    }*/
     /*
     // MARK: - Navigation
 
@@ -77,7 +87,7 @@ class FindLocationViewController: UIViewController {
     */
 
 }
-extension FindLocationViewController: UITextFieldDelegate {
+extension SubmitLocationViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField.state.isEmpty {
             let currenText = websiteTextField.text ?? ""
@@ -93,5 +103,8 @@ extension FindLocationViewController: UITextFieldDelegate {
             }
         }
         return true
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
     }
 }

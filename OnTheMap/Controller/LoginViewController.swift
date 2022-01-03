@@ -31,6 +31,7 @@ class LoginViewController: UIViewController, UITextViewDelegate {
             if loggingIn {
                 self.activityIndicator.isHidden = false
                 self.activityIndicator.startAnimating()
+                self.loginButton.isEnabled = false
             } else {
                 self.activityIndicator.stopAnimating()
                 self.activityIndicator.isHidden = true
@@ -40,7 +41,7 @@ class LoginViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func loginClick(_ sender: Any) {
         isLoggingIn(true)
-        UdacityClient.login(email: emailTextField.text!, password: passwordTextField.text!, completion: handleLoginResponse(success:error:))
+        UdacityClient.login(email: emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines), password: passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines), completion: handleLoginResponse(success:error:))
     }
     
     @IBAction func signUpClick(_ sender: Any) {
@@ -52,9 +53,10 @@ class LoginViewController: UIViewController, UITextViewDelegate {
         if success {
             
             self.performSegue(withIdentifier: "goToHome", sender: nil)
+            
         }
         else {
-            showAlert(message: error?.localizedDescription ?? "Wrong Email or Password", title: "Login")
+            showAlert(message: "Wrong Email or Password", title: "Login")
            
         }
         isLoggingIn(false)
@@ -77,7 +79,7 @@ extension LoginViewController: UITextFieldDelegate {
             if updatedText.isEmpty && updatedText == "" {
                 isEmailTextFieldEmpty = true
             } else {
-                isPasswordFieldEmpty = false
+                isEmailTextFieldEmpty = false
             }
         }
         
@@ -88,17 +90,17 @@ extension LoginViewController: UITextFieldDelegate {
             
             if updatedText.isEmpty && updatedText == "" {
                 isPasswordFieldEmpty = true
-                loginButton.isEnabled  = false
+                
             } else {
                 isPasswordFieldEmpty = false
-                loginButton.isEnabled  = true
+                
             }
         }
         
         if isEmailTextFieldEmpty == false && isPasswordFieldEmpty == false {
-            loginButton.isEnabled = false
-        } else {
             loginButton.isEnabled = true
+        } else {
+            loginButton.isEnabled = false
         }
         
         return true
@@ -122,7 +124,12 @@ extension LoginViewController: UITextFieldDelegate {
         return true
     }
         
-        
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let viewController = segue.destination as! UITabBarController
+        viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated: true, completion: nil)
+    }
     
         
 }

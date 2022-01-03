@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MapKit
 
 extension UIViewController {
 
@@ -20,9 +21,7 @@ extension UIViewController {
         let alert = UIAlertController(title: "Do you want to update your location?", message: "You have already posted a student location. Would you like to override your current location?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: { action in
-            let viewController = self.storyboard?.instantiateViewController(withIdentifier: "AddLocationViewController") as! AddLocationViewController
-            viewController.isUpdateLocation = true
-            self.navigationController?.pushViewController(viewController, animated: true)
+            self.performSegue(withIdentifier: "addLocation", sender: nil)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
@@ -30,15 +29,31 @@ extension UIViewController {
     }
     
     func logout(){
-        UdacityClient.logout { success, error in
-            if success {
-                self.dismiss(animated: true, completion: nil)
+        let alert = UIAlertController(title: "Logout", message: "Are you sure to logout?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            UdacityClient.logout { success, error in
+                if success {
+                    self.dismiss(animated: true, completion: nil)
+                }
+                else {
+                    self.showAlert(message: "Logout Error", title: "Logout")
+                }
             }
-            else {
-                self.showAlert(message: "Logout Error", title: "Logout")
-            }
-        }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
+    func setStudentCurrentLocationPin(mapView: MKMapView, coordinate: CLLocationCoordinate2D) {
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        mapView.addAnnotation(annotation)
+        mapView.setCenter(coordinate, animated: true)
+        let span = MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
+        let region =  MKCoordinateRegion(center: coordinate, span: span)
+        mapView.setRegion(region, animated: true)
+
+    }
     
 }

@@ -16,7 +16,7 @@ class ListViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         tableView.dataSource = self
         tableView.delegate  = self
         // Do any additional setup after loading the view.
-        getStudentLocations()
+        //getStudentLocations()
     }
     func  getStudentLocations() {
         UdacityClient.getStudentLocation { locations, error in
@@ -27,17 +27,20 @@ class ListViewController: UIViewController,  UITableViewDelegate, UITableViewDat
             
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getStudentLocations()
+    }
     
     @IBAction func addLocationClick(_ sender: Any) {
         //let isAlreadyPosted = locations.contains(where: {$0.uniqueKey == UdacityClient.Auth.accountKey})
         if !UdacityClient.Auth.objectId.isEmpty {
             showUpdateLocationAlert()
         }else{
-            let viewController = self.storyboard?.instantiateViewController(withIdentifier: "AddLocationViewController") as! AddLocationViewController
-            viewController.isUpdateLocation = false
-            self.navigationController?.pushViewController(viewController, animated: true)
+            performSegue(withIdentifier: "addLocation", sender: nil)
+            getStudentLocations()
         }
-        getStudentLocations()
+        
     }
     
     @IBAction func refreshClick(_ sender: Any) {
@@ -54,8 +57,8 @@ class ListViewController: UIViewController,  UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell  = tableView.dequeueReusableCell(withIdentifier: "StudentLocationCell", for: indexPath) as! LocationTableViewCell
-        cell.studentNameLabel.text = locations[indexPath.row].firstName +  locations[indexPath.row].lastName
-        cell.mediaURLLabel.text = locations[indexPath.row].mediaURL
+        cell.studentNameLabel.text = locations[indexPath.row].firstName + " " +  locations[indexPath.row].lastName
+        cell.mediaURLLabel.text = locations[indexPath.row].mapString
         return cell
     }
     
@@ -67,14 +70,16 @@ class ListViewController: UIViewController,  UITableViewDelegate, UITableViewDat
             showAlert(message: "This is  not a valid URL", title: "Invalid URL")
         }
     }
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        let viewController = segue.destination as! AddLocationViewController
+        viewController.isUpdateLocation =  UdacityClient.Auth.objectId.count > 0
+        //viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated: true, completion: nil)
     }
-    */
+    
 
 }

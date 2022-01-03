@@ -12,12 +12,17 @@ class AddLocationViewController: UIViewController {
 
     @IBOutlet weak var locationTextField: UITextField!
     var isUpdateLocation = false
-    
+    private var pinCoordinate = CLLocationCoordinate2D()
     @IBOutlet weak var findLocationButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        findLocationButton.isEnabled = false
+        locationTextField.delegate = self
         // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func cancelButtonClick(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func findLocationClick(_ sender: Any) {
@@ -49,25 +54,33 @@ class AddLocationViewController: UIViewController {
     }
     
     private func goToFindLocation(_ coordinate: CLLocationCoordinate2D) {
-        let viewController = storyboard?.instantiateViewController(withIdentifier: "FindLocationViewController") as! FindLocationViewController
+        /*let viewController = storyboard?.instantiateViewController(withIdentifier: "FindLocationViewController") as! FindLocationViewController
         viewController.coordinate = coordinate
         viewController.isUpdateLocation = isUpdateLocation
         viewController.location =  locationTextField.text!
-        self.navigationController?.pushViewController(viewController, animated: true)
+        self.navigationController?.pushViewController(viewController, animated: true)*/
+        self.pinCoordinate  = coordinate
+        performSegue(withIdentifier: "findLocation", sender: nil)
+        
     }
     
     // MARK: Student info to display on Final Add Location screen
     
    
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        let viewController = segue.destination as! SubmitLocationViewController
+        viewController.coordinate = pinCoordinate
+        viewController.location = locationTextField.text!
+        viewController.isUpdateLocation = isUpdateLocation
+        present(viewController, animated: true, completion: nil)
     }
-    */
+    
 
 }
 extension AddLocationViewController: UITextFieldDelegate {
@@ -84,5 +97,9 @@ extension AddLocationViewController: UITextFieldDelegate {
             }
         }
         return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
     }
 }

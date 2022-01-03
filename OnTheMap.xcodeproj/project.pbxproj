@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		FD00D3D9276CF16400FEB4D2 /* PostLocationRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD00D3D8276CF16400FEB4D2 /* PostLocationRequestBody.swift */; };
 		FD0E6954277383AB0083B2B6 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0E6953277383AB0083B2B6 /* AddLocationViewController.swift */; };
-		FD0E6956277384640083B2B6 /* FindLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0E6955277384640083B2B6 /* FindLocationViewController.swift */; };
+		FD0E6956277384640083B2B6 /* SubmitLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0E6955277384640083B2B6 /* SubmitLocationViewController.swift */; };
 		FD0E69582773994E0083B2B6 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0E69572773994E0083B2B6 /* UIViewController+Extension.swift */; };
 		FD14E3812763B049002115B8 /* StudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD14E3802763B048002115B8 /* StudentLocation.swift */; };
 		FD14E3832763B0E4002115B8 /* PostLocationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD14E3822763B0E4002115B8 /* PostLocationResponse.swift */; };
@@ -32,7 +32,7 @@
 /* Begin PBXFileReference section */
 		FD00D3D8276CF16400FEB4D2 /* PostLocationRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLocationRequestBody.swift; sourceTree = "<group>"; };
 		FD0E6953277383AB0083B2B6 /* AddLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
-		FD0E6955277384640083B2B6 /* FindLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocationViewController.swift; sourceTree = "<group>"; };
+		FD0E6955277384640083B2B6 /* SubmitLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitLocationViewController.swift; sourceTree = "<group>"; };
 		FD0E69572773994E0083B2B6 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		FD14E3802763B048002115B8 /* StudentLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentLocation.swift; sourceTree = "<group>"; };
 		FD14E3822763B0E4002115B8 /* PostLocationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLocationResponse.swift; sourceTree = "<group>"; };
@@ -120,7 +120,7 @@
 				FD4A3C94274FF38100227104 /* MapViewController.swift */,
 				FD1D84872770903B00E88721 /* ListViewController.swift */,
 				FD0E6953277383AB0083B2B6 /* AddLocationViewController.swift */,
-				FD0E6955277384640083B2B6 /* FindLocationViewController.swift */,
+				FD0E6955277384640083B2B6 /* SubmitLocationViewController.swift */,
 				FD0E69572773994E0083B2B6 /* UIViewController+Extension.swift */,
 			);
 			path = Controller;
@@ -247,7 +247,7 @@
 				FD0E69582773994E0083B2B6 /* UIViewController+Extension.swift in Sources */,
 				FD1D84882770903B00E88721 /* ListViewController.swift in Sources */,
 				FD14E3872763B59C002115B8 /* StudentLocationResponse.swift in Sources */,
-				FD0E6956277384640083B2B6 /* FindLocationViewController.swift in Sources */,
+				FD0E6956277384640083B2B6 /* SubmitLocationViewController.swift in Sources */,
 				FDCB8DDF26F893A0004EB745 /* SceneDelegate.swift in Sources */,
 				FD0E6954277383AB0083B2B6 /* AddLocationViewController.swift in Sources */,
 				FDF2C7BF274C070400960818 /* LoginResponse.swift in Sources */,
