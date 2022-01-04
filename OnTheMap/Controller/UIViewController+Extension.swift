@@ -9,7 +9,6 @@ import UIKit
 import MapKit
 
 extension UIViewController {
-
     
     func showAlert(message: String, title: String) {
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -52,8 +51,9 @@ extension UIViewController {
         mapView.setCenter(coordinate, animated: true)
         let span = MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
         let region =  MKCoordinateRegion(center: coordinate, span: span)
-        mapView.setRegion(region, animated: true)
+        mapView.setRegion(mapView.regionThatFits(region), animated: true)
 
     }
     
 }
+

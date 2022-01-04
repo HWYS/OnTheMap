@@ -27,6 +27,7 @@
 		FDCB8DE926F893AF004EB745 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDCB8DE726F893AF004EB745 /* LaunchScreen.storyboard */; };
 		FDD38C1027690321002E17AD /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD38C0F27690321002E17AD /* UdacityClient.swift */; };
 		FDF2C7BF274C070400960818 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2C7BE274C070400960818 /* LoginResponse.swift */; };
+		FDFD10DD2783F68900CEA853 /* StudentLocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFD10DC2783F68900CEA853 /* StudentLocationData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		FDCB8DEA26F893AF004EB745 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FDD38C0F27690321002E17AD /* UdacityClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		FDF2C7BE274C070400960818 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
+		FDFD10DC2783F68900CEA853 /* StudentLocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentLocationData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,13 +74,6 @@
 				FD4E6D9C277B19FF00D524B0 /* LogInRequestBody.swift */,
 			);
 			path = Request;
-			sourceTree = "<group>";
-		};
-		FDCA9C69275386E400E909BF /* Constant */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Constant;
 			sourceTree = "<group>";
 		};
 		FDCB8DD026F8939F004EB745 = {
@@ -137,9 +132,9 @@
 		FDCB8DF226F8ACC4004EB745 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FDFD10DB2783F67300CEA853 /* Data */,
 				FD00D3D7276CF12C00FEB4D2 /* Request */,
 				FDD38C0E276902C6002E17AD /* Api Client */,
-				FDCA9C69275386E400E909BF /* Constant */,
 				FDF2C7BD274C06EC00960818 /* Response */,
 				FD14E3802763B048002115B8 /* StudentLocation.swift */,
 			);
@@ -163,6 +158,14 @@
 				FD14E3862763B59C002115B8 /* StudentLocationResponse.swift */,
 			);
 			path = Response;
+			sourceTree = "<group>";
+		};
+		FDFD10DB2783F67300CEA853 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				FDFD10DC2783F68900CEA853 /* StudentLocationData.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,6 +242,7 @@
 				FDD38C1027690321002E17AD /* UdacityClient.swift in Sources */,
 				FD1D848A2770E40300E88721 /* LocationTableViewCell.swift in Sources */,
 				FD14E3852763B145002115B8 /* UpdateLocationResponse.swift in Sources */,
+				FDFD10DD2783F68900CEA853 /* StudentLocationData.swift in Sources */,
 				FD14E3812763B049002115B8 /* StudentLocation.swift in Sources */,
 				FDCB8DE126F893A0004EB745 /* LoginViewController.swift in Sources */,
 				FD4A3C95274FF38100227104 /* MapViewController.swift in Sources */,

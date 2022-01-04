@@ -12,8 +12,11 @@ class AddLocationViewController: UIViewController {
 
     @IBOutlet weak var locationTextField: UITextField!
     var isUpdateLocation = false
+    var refreshDelegate: RefreshViewController?
     private var pinCoordinate = CLLocationCoordinate2D()
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var findLocationButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         findLocationButton.isEnabled = false
@@ -30,11 +33,12 @@ class AddLocationViewController: UIViewController {
     }
     
     private func findGeoLocationByName(locationName: String){
+        setLoading(isLoading: true)
         CLGeocoder().geocodeAddressString(locationName) { (marker, error) in
             if let error = error {
                 self.showAlert(message: error.localizedDescription, title: "Location Not Found")
-                //self.setLoading(false)
-                print("Location not found.")
+               
+                self.setLoading(isLoading: false)
             } else {
                 var location: CLLocation?
                 
@@ -46,28 +50,33 @@ class AddLocationViewController: UIViewController {
                     self.goToFindLocation(location.coordinate)
                 } else {
                     self.showAlert(message: "Please try again later.", title: "Error")
-                    //self.setLoading(false)
-                    print("There was an error.")
+                    self.setLoading(isLoading: false)
                 }
             }
         }
     }
     
     private func goToFindLocation(_ coordinate: CLLocationCoordinate2D) {
-        /*let viewController = storyboard?.instantiateViewController(withIdentifier: "FindLocationViewController") as! FindLocationViewController
-        viewController.coordinate = coordinate
-        viewController.isUpdateLocation = isUpdateLocation
-        viewController.location =  locationTextField.text!
-        self.navigationController?.pushViewController(viewController, animated: true)*/
+        setLoading(isLoading: false)
         self.pinCoordinate  = coordinate
         performSegue(withIdentifier: "findLocation", sender: nil)
         
     }
     
-    // MARK: Student info to display on Final Add Location screen
-    
+    private func setLoading(isLoading: Bool){
+        DispatchQueue.main.async {
+            if isLoading {
+                self.activityIndicator.startAnimating()
+            }
+            else {
+                self.activityIndicator.stopAnimating()
+            }
+            
+            self.findLocationButton.isEnabled = !isLoading
+        }
+        
+    }
    
-    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -78,6 +87,7 @@ class AddLocationViewController: UIViewController {
         viewController.coordinate = pinCoordinate
         viewController.location = locationTextField.text!
         viewController.isUpdateLocation = isUpdateLocation
+        viewController.refreshDelegate = refreshDelegate
         present(viewController, animated: true, completion: nil)
     }
     

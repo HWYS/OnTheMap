@@ -7,10 +7,11 @@
 
 import UIKit
 
-class ListViewController: UIViewController,  UITableViewDelegate, UITableViewDataSource {
+class ListViewController: UIViewController,  UITableViewDelegate, UITableViewDataSource, RefreshViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    var locations =  [StudentLocation]()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
@@ -21,8 +22,13 @@ class ListViewController: UIViewController,  UITableViewDelegate, UITableViewDat
     func  getStudentLocations() {
         UdacityClient.getStudentLocation { locations, error in
             DispatchQueue.main.async {
-                self.locations = locations
-                self.tableView.reloadData()
+                if locations.isEmpty {
+                    self.showAlert(message: "Error downloading student locations", title: "Student Locations")
+                }else {
+                    StudentLocationData.locations = locations
+                    self.tableView.reloadData()
+                }
+                
             }
             
         }
@@ -52,18 +58,19 @@ class ListViewController: UIViewController,  UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        locations.count
+        StudentLocationData.locations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let data = StudentLocationData.locations[indexPath.row]
         let cell  = tableView.dequeueReusableCell(withIdentifier: "StudentLocationCell", for: indexPath) as! LocationTableViewCell
-        cell.studentNameLabel.text = locations[indexPath.row].firstName + " " +  locations[indexPath.row].lastName
-        cell.mediaURLLabel.text = locations[indexPath.row].mapString
+        cell.studentNameLabel.text = data.firstName + " " +  data.lastName
+        cell.mediaURLLabel.text = data.mapString
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let url = URL(string: locations[indexPath.row].mediaURL){
+        if let url = URL(string: StudentLocationData.locations[indexPath.row].mediaURL){
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }else{
             
@@ -77,9 +84,14 @@ class ListViewController: UIViewController,  UITableViewDelegate, UITableViewDat
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let viewController = segue.destination as! AddLocationViewController
         viewController.isUpdateLocation =  UdacityClient.Auth.objectId.count > 0
+        viewController.refreshDelegate = self
         //viewController.modalPresentationStyle = .fullScreen
-        present(viewController, animated: true, completion: nil)
+        //present(viewController, animated: true, completion: nil)
     }
     
-
+    func refreshVC() {
+        getStudentLocations()
+    }
 }
+
+

@@ -11,12 +11,12 @@ class LoginViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    
     var isEmailTextFieldEmpty = true
     @IBOutlet weak var loginButton: UIButton!
     var isPasswordFieldEmpty = true
-    
+    @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loginButton.isEnabled =  false
@@ -29,14 +29,21 @@ class LoginViewController: UIViewController, UITextViewDelegate {
     func isLoggingIn(_ loggingIn: Bool) {
         DispatchQueue.main.async {
             if loggingIn {
-                self.activityIndicator.isHidden = false
+                
                 self.activityIndicator.startAnimating()
-                self.loginButton.isEnabled = false
+                
             } else {
                 self.activityIndicator.stopAnimating()
-                self.activityIndicator.isHidden = true
+                
             }
+            self.emailTextField.isEnabled = !loggingIn
+            self.passwordTextField.isEnabled = !loggingIn
+            self.loginButton.isEnabled = !loggingIn
+            self.signupButton.isEnabled = !loggingIn
         }
+        
+        
+        
     }
     
     @IBAction func loginClick(_ sender: Any) {
@@ -56,7 +63,10 @@ class LoginViewController: UIViewController, UITextViewDelegate {
             
         }
         else {
-            showAlert(message: "Wrong Email or Password", title: "Login")
+            DispatchQueue.main.async {
+                self.showAlert(message: error?.localizedDescription ?? "Wrong Email or Password", title: "Login")
+            }
+            
            
         }
         isLoggingIn(false)

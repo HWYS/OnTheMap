@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, RefreshViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     
@@ -25,9 +25,7 @@ class MapViewController: UIViewController {
         if !UdacityClient.Auth.objectId.isEmpty {
             showUpdateLocationAlert()
         }else{
-            /*let viewController = self.storyboard?.instantiateViewController(withIdentifier: "AddLocationViewController") as! AddLocationViewController
-            viewController.isUpdateLocation = false
-            self.navigationController?.pushViewController(viewController, animated: true)*/
+            
             performSegue(withIdentifier: "addLocation", sender: nil)
         }
         
@@ -50,11 +48,17 @@ class MapViewController: UIViewController {
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         UdacityClient.getStudentLocation { locations, error in
-            self.showPinsOnMap(locations: locations)
+            if locations.isEmpty {
+                self.showAlert(message: "Error downloading student locations", title: "Student Locations")
+                self.activityIndicator.stopAnimating()
+            }else {
+                self.showPinsOnMap(locations: locations)
+            }
         }
     }
     
     func showPinsOnMap(locations: [StudentLocation]) {
+        mapView.removeAnnotations(mapView.annotations)
         var annotations = [MKPointAnnotation]()
         for dictionary in locations {
             
@@ -80,7 +84,6 @@ class MapViewController: UIViewController {
         }
         self.mapView.addAnnotations(annotations)
         activityIndicator.stopAnimating()
-        activityIndicator.isHidden = true
         
         if UdacityClient.Auth.studentPostedCoordinate.longitude > 0 {
             setStudentCurrentLocationPin(mapView: mapView, coordinate: UdacityClient.Auth.studentPostedCoordinate)
@@ -95,6 +98,7 @@ class MapViewController: UIViewController {
         // Pass the selected object to the new view controller.
         let viewController = segue.destination as! AddLocationViewController
         viewController.isUpdateLocation =  UdacityClient.Auth.objectId.count > 0
+        viewController.refreshDelegate = self
         //viewController.modalPresentationStyle = .fullScreen
         //present(viewController, animated: true, completion: nil)
     }
@@ -102,6 +106,10 @@ class MapViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        getStudentLocations()
+    }
+    
+    func refreshVC() {
         getStudentLocations()
     }
 }
@@ -141,4 +149,9 @@ extension  MapViewController: MKMapViewDelegate {
     }
     
     
+}
+
+
+protocol RefreshViewController{
+    func refreshVC()
 }

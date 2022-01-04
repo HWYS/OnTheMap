@@ -61,7 +61,7 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="pKp-Gl-vMf">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="pKp-Gl-vMf">
                                 <rect key="frame" x="188.5" y="236.5" width="37" height="37"/>
                                 <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </activityIndicatorView>
@@ -109,6 +109,7 @@
                         <outlet property="emailTextField" destination="tYx-ZW-eYZ" id="blD-LA-ucr"/>
                         <outlet property="loginButton" destination="TyD-NE-rFa" id="cka-or-f6k"/>
                         <outlet property="passwordTextField" destination="FCy-Bl-39t" id="Tv9-g3-eYX"/>
+                        <outlet property="signupButton" destination="0DD-Ww-3cr" id="PH0-sa-Bs8"/>
                         <segue destination="1QW-tZ-oWM" kind="show" identifier="goToHome" id="d0p-K4-uMB"/>
                     </connections>
                 </viewController>
@@ -218,8 +219,9 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NxW-AD-lza">
                                 <rect key="frame" x="0.0" y="56" width="414" height="757"/>
                             </mapView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="W1c-qS-nD7">
-                                <rect key="frame" x="197" y="411" width="20" height="20"/>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="W1c-qS-nD7">
+                                <rect key="frame" x="188.5" y="402.5" width="37" height="37"/>
+                                <color key="color" red="0.94082206489999998" green="0.59957838060000002" blue="0.2162639797" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="BKD-NO-wTF"/>
@@ -308,7 +310,7 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where are you" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JKe-I4-GIg">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where are you" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JKe-I4-GIg">
                                 <rect key="frame" x="111.5" y="150" width="191.5" height="37"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -326,6 +328,10 @@
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="sHo-h9-rd6">
+                                <rect key="frame" x="188.5" y="76" width="37" height="37"/>
+                                <color key="color" red="0.94082206489999998" green="0.59957838060000002" blue="0.2162639797" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="a2C-lx-DA6"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -341,12 +347,15 @@
                             <constraint firstItem="6n7-xl-Oxk" firstAttribute="centerX" secondItem="kRm-pe-FUw" secondAttribute="centerX" id="U12-IV-69l"/>
                             <constraint firstItem="szP-dg-KJN" firstAttribute="top" secondItem="a2C-lx-DA6" secondAttribute="top" id="ZqK-yJ-aeL"/>
                             <constraint firstItem="a2C-lx-DA6" firstAttribute="trailing" secondItem="laP-Z6-8v3" secondAttribute="trailing" constant="20" id="bjr-d7-qA9"/>
+                            <constraint firstItem="sHo-h9-rd6" firstAttribute="centerX" secondItem="kRm-pe-FUw" secondAttribute="centerX" id="gpT-df-Nfz"/>
                             <constraint firstItem="szP-dg-KJN" firstAttribute="trailing" secondItem="a2C-lx-DA6" secondAttribute="trailing" id="i0m-KL-EUs"/>
+                            <constraint firstItem="sHo-h9-rd6" firstAttribute="top" secondItem="szP-dg-KJN" secondAttribute="bottom" constant="20" id="vfy-v2-vhh"/>
                             <constraint firstItem="laP-Z6-8v3" firstAttribute="centerY" secondItem="kRm-pe-FUw" secondAttribute="centerY" id="wHo-Ey-PtE"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xFk-AZ-9Sm"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="sHo-h9-rd6" id="0wK-N4-b7P"/>
                         <outlet property="findLocationButton" destination="vpK-CQ-yff" id="HHD-lN-Aku"/>
                         <outlet property="locationTextField" destination="40N-jw-VFA" id="S0V-qo-Lpi"/>
                         <segue destination="MSw-qm-X2y" kind="showDetail" identifier="findLocation" id="3XG-7C-cjo"/>
@@ -400,6 +409,10 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="aQR-83-jT8">
+                                <rect key="frame" x="188.5" y="402.5" width="37" height="37"/>
+                                <color key="color" red="0.94082206489999998" green="0.59957838060000002" blue="0.2162639797" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="bnj-M4-Tmp"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -413,6 +426,8 @@
                             <constraint firstItem="bnj-M4-Tmp" firstAttribute="bottom" secondItem="cZ7-yg-a1U" secondAttribute="bottom" constant="50" id="Pna-1I-Lsl"/>
                             <constraint firstItem="lVk-WH-QHk" firstAttribute="top" secondItem="bnj-M4-Tmp" secondAttribute="top" id="WGI-cK-AEt"/>
                             <constraint firstItem="bnj-M4-Tmp" firstAttribute="trailing" secondItem="3ZS-mx-NeU" secondAttribute="trailing" constant="20" id="YdR-Yp-bKZ"/>
+                            <constraint firstItem="aQR-83-jT8" firstAttribute="centerX" secondItem="LfP-XT-OgB" secondAttribute="centerX" id="Yuj-0C-ISY"/>
+                            <constraint firstItem="aQR-83-jT8" firstAttribute="centerY" secondItem="LfP-XT-OgB" secondAttribute="centerY" id="aNa-bt-6ym"/>
                             <constraint firstItem="3ZS-mx-NeU" firstAttribute="top" secondItem="lVk-WH-QHk" secondAttribute="bottom" constant="20" id="dLc-zJ-14F"/>
                             <constraint firstItem="Jta-DR-mjs" firstAttribute="top" secondItem="3ZS-mx-NeU" secondAttribute="bottom" constant="10" id="iwg-l8-0dt"/>
                             <constraint firstItem="cZ7-yg-a1U" firstAttribute="leading" secondItem="bnj-M4-Tmp" secondAttribute="leading" constant="20" id="unW-MN-K0L"/>
@@ -421,6 +436,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="u3L-zm-fdR"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="aQR-83-jT8" id="kmx-kV-U3p"/>
                         <outlet property="mapView" destination="Jta-DR-mjs" id="ENS-SO-S4n"/>
                         <outlet property="submitButton" destination="cZ7-yg-a1U" id="QcD-YH-exi"/>
                         <outlet property="websiteTextField" destination="3ZS-mx-NeU" id="bOK-mo-DiZ"/>

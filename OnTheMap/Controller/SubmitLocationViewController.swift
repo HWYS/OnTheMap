@@ -13,7 +13,8 @@ class SubmitLocationViewController: UIViewController {
     var mediaURL: String =  ""
     var  isUpdateLocation = false
     var coordinate = CLLocationCoordinate2D()
-    
+    var refreshDelegate: RefreshViewController?
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var websiteTextField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
@@ -28,7 +29,8 @@ class SubmitLocationViewController: UIViewController {
     
     @IBAction func finishClick(_ sender: Any) {
         if let _ = URL(string: websiteTextField.text!) {
-            let body = PostLocationRequestBody(uniqueKey: UdacityClient.Auth.accountKey, firstName: "Johnathan", lastName: "Diaz", mapString: location, mediaURL: websiteTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines), latitude: coordinate.latitude, longitude: coordinate.longitude)
+            setLoading(isLoading: true)
+            let body = PostLocationRequestBody(uniqueKey: UdacityClient.Auth.accountKey, firstName: "Ave", lastName: "K", mapString: location, mediaURL: websiteTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines), latitude: coordinate.latitude, longitude: coordinate.longitude)
             if isUpdateLocation {
                 UdacityClient.updateLocation(objectId: UdacityClient.Auth.objectId, locationData: body, completion: handleLocationRequest(succes:error:))
             } else{
@@ -36,46 +38,56 @@ class SubmitLocationViewController: UIViewController {
             }
             
         } else {
-            showAlert(message: "This is  not a valid URL", title: "Invalid URL")
+            sendAlertMessageParameters(title: "Invalid URL", message: "This is not a valid URL")
         }
     }
     
     func handleLocationRequest(succes: Bool, error: Error?) {
+        setLoading(isLoading: false)
         if succes {
             
             UdacityClient.Auth.studentPostedCoordinate = coordinate
+            
             goBackToHome()
             
         }else{
             if isUpdateLocation {
-                showAlert(message: "Something went wrong when updating location", title: "Location Update")
+                sendAlertMessageParameters(title: "Location Update", message: error?.localizedDescription ?? "Something went wrong when updating location")
             }else {
-                showAlert(message: "Something went wrong when adding location", title: "Location Add")
+                sendAlertMessageParameters(title: "Location Add", message: error?.localizedDescription ?? "Something went wrong when adding location")
             }
             
         }
         
+    }
+    
+    private func sendAlertMessageParameters(title: String, message: String) {
+        DispatchQueue.main.async {
+            self.showAlert(message: message, title: title)
+        }
     }
     @IBAction func cancelButtonClick(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
     func goBackToHome () {
-       
+        refreshDelegate?.refreshVC()
         presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
-    /*func setLocationPin() {
+    private func setLoading(isLoading: Bool){
+        DispatchQueue.main.async {
+            if isLoading {
+                self.activityIndicator.startAnimating()
+            }
+            else {
+                self.activityIndicator.stopAnimating()
+            }
+            
+            self.submitButton.isEnabled = !isLoading
+        }
         
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = coordinate
-        self.mapView.addAnnotation(annotation)
-        self.mapView.setCenter(coordinate, animated: true)
-        let span = MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
-        let region =  MKCoordinateRegion(center: coordinate, span: span)
-        self.mapView.setRegion(region, animated: true)
-
-    }*/
+    }
     /*
     // MARK: - Navigation
 
