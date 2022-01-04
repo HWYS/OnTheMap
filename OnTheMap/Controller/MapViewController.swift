@@ -77,7 +77,6 @@ class MapViewController: UIViewController, RefreshViewController {
             annotation.title = "\(first) \(last)"
             annotation.subtitle = mediaURL
             
-            // Finally we place the annotation in an array of annotations.
             annotations.append(annotation)
             
             
@@ -90,25 +89,15 @@ class MapViewController: UIViewController, RefreshViewController {
         }
     }
     
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
         let viewController = segue.destination as! AddLocationViewController
         viewController.isUpdateLocation =  UdacityClient.Auth.objectId.count > 0
         viewController.refreshDelegate = self
-        //viewController.modalPresentationStyle = .fullScreen
-        //present(viewController, animated: true, completion: nil)
     }
     
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        getStudentLocations()
-    }
-    
+   
     func refreshVC() {
         getStudentLocations()
     }

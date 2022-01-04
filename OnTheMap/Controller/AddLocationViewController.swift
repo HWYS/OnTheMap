@@ -20,7 +20,7 @@ class AddLocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         findLocationButton.isEnabled = false
-        locationTextField.delegate = self
+        
         // Do any additional setup after loading the view.
     }
     

@@ -20,8 +20,6 @@ class LoginViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         loginButton.isEnabled =  false
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
         
         isLoggingIn(false)
     }
@@ -124,7 +122,6 @@ extension LoginViewController: UITextFieldDelegate {
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        //loginButton.isEnabled = false
         if textField == emailTextField {
             isEmailTextFieldEmpty = true
         }

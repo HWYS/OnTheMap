@@ -14,11 +14,9 @@ class ListViewController: UIViewController,  UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
-        tableView.delegate  = self
-        // Do any additional setup after loading the view.
-        //getStudentLocations()
+        getStudentLocations()
     }
+    
     func  getStudentLocations() {
         UdacityClient.getStudentLocation { locations, error in
             DispatchQueue.main.async {
@@ -33,13 +31,9 @@ class ListViewController: UIViewController,  UITableViewDelegate, UITableViewDat
             
         }
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        getStudentLocations()
-    }
+    
     
     @IBAction func addLocationClick(_ sender: Any) {
-        //let isAlreadyPosted = locations.contains(where: {$0.uniqueKey == UdacityClient.Auth.accountKey})
         if !UdacityClient.Auth.objectId.isEmpty {
             showUpdateLocationAlert()
         }else{
@@ -85,8 +79,6 @@ class ListViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         let viewController = segue.destination as! AddLocationViewController
         viewController.isUpdateLocation =  UdacityClient.Auth.objectId.count > 0
         viewController.refreshDelegate = self
-        //viewController.modalPresentationStyle = .fullScreen
-        //present(viewController, animated: true, completion: nil)
     }
     
     func refreshVC() {
