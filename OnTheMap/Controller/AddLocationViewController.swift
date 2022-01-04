@@ -35,8 +35,8 @@ class AddLocationViewController: UIViewController {
     private func findGeoLocationByName(locationName: String){
         setLoading(isLoading: true)
         CLGeocoder().geocodeAddressString(locationName) { (marker, error) in
-            if let error = error {
-                self.showAlert(message: error.localizedDescription, title: "Location Not Found")
+            if let _ = error {
+                self.showAlert(message: "Error when getting location", title: "Location Not Found")
                
                 self.setLoading(isLoading: false)
             } else {
@@ -49,7 +49,7 @@ class AddLocationViewController: UIViewController {
                 if let location = location {
                     self.goToFindLocation(location.coordinate)
                 } else {
-                    self.showAlert(message: "Please try again later.", title: "Error")
+                    self.showAlert(message: "Error when getting location", title: "Error")
                     self.setLoading(isLoading: false)
                 }
             }
